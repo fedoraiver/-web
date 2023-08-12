@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="primary">button</el-button>
+    <el-button type="primary">上传图片</el-button>
   </div>
 </template>
 

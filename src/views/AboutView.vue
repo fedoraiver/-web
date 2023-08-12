@@ -1,5 +1,5 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <h1>在首页上传矩阵运算的图片(png格式)，并耐心等待结果。</h1>
   </div>
 </template>
