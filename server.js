@@ -1,10 +1,11 @@
 const express = require('express');
-const multer = require('multer'); // 用于处理文件上传的中间件
+const cors = require('cors'); // 引入 cors 中间件
+const multer = require('multer');
 const path = require('path');
 
 const app = express();
-const port = 3000; // 你可以根据需要更改端口号
-
+const port = 8081;
+app.use(cors()); // 使用 cors 中间件，允许跨域请求
 // 配置文件上传的存储位置和文件名
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -35,3 +36,6 @@ app.post('/upload', upload.single('imageFile'), (req, res) => {
 app.listen(port, () => {
   console.log(`服务器运行在 http://localhost:${port}`);
 });
+
+
+

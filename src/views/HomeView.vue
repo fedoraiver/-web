@@ -1,6 +1,11 @@
 <template>
   <div>
-    <form id="uploadForm" enctype="multipart/form-data">
+    <form
+      id="uploadForm"
+      enctype="multipart/form-data"
+      action="http://localhost:8081/upload"
+      method="post"
+    >
       <input type="file" name="imageFile" id="imageFile" />
       <button type="submit">上传图片</button>
     </form>
