@@ -4,7 +4,7 @@ const multer = require('multer');
 const path = require('path');
 
 const app = express();
-const port = 8081;
+const port = 49154;
 app.use(cors()); // 使用 cors 中间件，允许跨域请求
 // 配置文件上传的存储位置和文件名
 const storage = multer.diskStorage({
@@ -17,7 +17,16 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ storage: storage });
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(new Error('只允许上传后缀为 .png 的图片'));
+  }
+};
+
+
+const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 // 设置静态文件目录，以便可以访问上传的文件
 app.use(express.static('public'));

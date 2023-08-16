@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 运行 npm run server
-npm run serve --prefix /Users/tangdanyu/Desktop/HITsz/大一立项/project/vue &
+PORT=49153 npm run serve --prefix /Users/tangdanyu/Desktop/HITsz/大一立项/project/vue &
 
 # 等待一段时间，确保服务器已经启动
 sleep 5
