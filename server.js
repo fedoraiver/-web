@@ -12,16 +12,15 @@ const storage = multer.diskStorage({
     cb(null, 'uploads/'); // 存储文件的目录，确保该目录存在
   },
   filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, 'uploaded_' + Date.now() + ext); // 为上传的文件生成唯一的文件名
+    cb(null, '1.png' ); // 为上传的文件生成唯一的文件名
   }
 });
 
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype === 'image/png') {
+  if (file.mimetype === 'image/png' || file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' ) {
     cb(null, true);
   } else {
-    cb(new Error('只允许上传后缀为 .png 的图片'));
+    cb(new Error('只允许上传图片'));
   }
 };
 
@@ -35,7 +34,7 @@ app.use(express.static('public'));
 app.post('/upload', upload.single('imageFile'), (req, res) => {
   if (req.file) {
     // 文件上传成功
-    res.json({ message: '文件上传成功' });
+    res.redirect('http://192.168.31.89:49153/');
   } else {
     // 没有选择文件或上传失败
     res.status(400).json({ message: '文件上传失败' });

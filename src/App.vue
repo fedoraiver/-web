@@ -34,6 +34,7 @@
           <el-submenu>
             <template slot="title">其他</template>
             <el-menu-item index="/about">帮助</el-menu-item>
+            <el-menu-item index="/people">制作人员</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>
