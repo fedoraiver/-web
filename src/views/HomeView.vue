@@ -10,7 +10,10 @@
       <button type="submit">上传图片</button>
     </form>
     <img src="../../uploads/1.png" />
-    <img src="../../uploads/2.png" />
+    <a href="http://192.168.31.89:49154/download" download="结果.txt"
+      >点击这里下载结果</a
+    >
+    <!-- <img src="../../uploads/2.png" /> -->
   </div>
 </template>
 

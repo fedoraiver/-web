@@ -1,3 +1,4 @@
+const fs = require('fs'); // 引入文件系统模块
 const express = require('express');
 const cors = require('cors'); // 引入 cors 中间件
 const multer = require('multer');
@@ -39,6 +40,20 @@ app.post('/upload', upload.single('imageFile'), (req, res) => {
     // 没有选择文件或上传失败
     res.status(400).json({ message: '文件上传失败' });
   }
+});
+// 添加一个路由来提供下载txt文件
+app.get('/download', (req, res) => {
+  const filePath = '/Users/tangdanyu/Desktop/HITsz/大一立项/project/vue/uploads/3.txt'; // 指定txt文件的本地路径
+  const fileName = '结果.txt'; // 设置用户下载的文件名
+
+  // 使用Express的res.download方法来发送文件给用户
+  res.download(filePath, fileName, (err) => {
+    if (err) {
+      // 如果出现错误，您可以处理它
+      console.error(err);
+      res.status(500).send('下载文件时出错');
+    }
+  });
 });
 
 app.listen(port, () => {
