@@ -35,7 +35,7 @@ app.use(express.static('public'));
 app.post('/upload', upload.single('imageFile'), (req, res) => {
   if (req.file) {
     // 文件上传成功
-    res.redirect('http://192.168.31.89:49153/');
+    res.redirect('http://10.250.136.172:49153/');
   } else {
     // 没有选择文件或上传失败
     res.status(400).json({ message: '文件上传失败' });
