@@ -31,6 +31,7 @@
       >
         <el-menu :default-active="$router.path" router class="el-menu-demo">
           <el-menu-item index="/">首页</el-menu-item>
+          <el-menu-item index="/operation">操作</el-menu-item>
           <el-menu-item index="/result">结果</el-menu-item>
           <el-submenu>
             <template slot="title">其他</template>

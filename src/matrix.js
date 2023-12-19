@@ -1,22 +1,22 @@
 export default {
-    data() {
-      return {
-        matrix: [],
-      };
+  data() {
+    return {
+      matrix: [],
+    };
+  },
+  mounted() {
+    // 发起请求获取数据
+    this.fetchData();
+  },
+  methods: {
+    fetchData() {
+      fetch('http://10.250.136.172:49154/api/data-matrix')
+        .then(response => response.json())
+        .then(data => {
+          // 更新前端界面的 matrix 数据
+          this.matrix = data.dataMatrix;
+        })
+        .catch(error => console.error('Error:', error));
     },
-    mounted() {
-      this.generateMatrix(4, 3); // 传入矩阵的行数和列数
-    },
-    methods: {
-      generateMatrix(numRows, numCols) {
-        for (let i = 0; i < numRows; i++) {
-          const row = [];
-          for (let j = 0; j < numCols; j++) {
-            // 假设矩阵元素为随机数
-            row.push(1);
-          }
-          this.matrix.push(row);
-        }
-      },
-    },
-  };
+  },
+};
