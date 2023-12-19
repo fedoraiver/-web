@@ -1,31 +1,23 @@
 <template>
   <div>
-    <button @click="handleButtonClick">矩阵求逆</button>
+    <button @click="executeCommand">矩阵求逆</button>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   methods: {
-    handleButtonClick() {
-      // 你可以在这里设置需要传递给后端的信息
-      const messageToSend = "Hello from frontend!";
-
-      // 发送POST请求给后端
-      fetch("", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message: messageToSend }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("后端返回的数据:", data);
-          // 在这里可以处理后端返回的数据
+    executeCommand() {
+      // 发起对后端的API请求
+      axios
+        .get("http://10.250.136.172:49154/api/data-matrix/inverse")
+        .then((response) => {
+          console.log("命令执行结果:", response.data);
         })
         .catch((error) => {
-          console.error("请求错误:", error);
+          console.error("请求失败:", error);
         });
     },
   },

@@ -10,7 +10,7 @@ export default {
   },
   methods: {
     fetchData() {
-      fetch('http://10.250.136.172:49154/api/data-matrix')
+      fetch('http://10.250.136.172:49154/api/data-matrix/get')
         .then(response => response.json())
         .then(data => {
           // 更新前端界面的 matrix 数据

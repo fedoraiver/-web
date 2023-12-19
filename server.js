@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors'); // 引入 cors 中间件
 const multer = require('multer');
 const csv = require('csv-parser');
+const { execSync } = require('child_process');
 const path = require('path');
 
 const app = express();
@@ -15,7 +16,7 @@ const storage = multer.diskStorage({
     cb(null, 'uploads/'); // 存储文件的目录，确保该目录存在
   },
   filename: (req, file, cb) => {
-    cb(null, '1.png' ); // 为上传的文件生成唯一的文件名
+    cb(null, '1.jpg' ); // 为上传的文件生成唯一的文件名
   }
 });
 
@@ -45,7 +46,7 @@ app.post('/upload', upload.single('imageFile'), (req, res) => {
 });
 // 添加一个路由来提供下载txt文件
 app.get('/download', (req, res) => {
-  const filePath = '/Users/tangdanyu/Desktop/HITSZ/大一立项/project/vue/uploads/1.csv'; // 指定txt文件的本地路径
+  const filePath = './uploads/1.csv'; // 指定txt文件的本地路径
   const fileName = '结果.csv'; // 设置用户下载的文件名
 
   // 使用Express的res.download方法来发送文件给用户
@@ -63,10 +64,9 @@ app.listen(port, () => {
 });
 
 
-const filePath = './uploads/1.csv';
 
 // 读取CSV文件
-function readCSVFile(callback) {
+function readCSVFile(filePath,callback) {
   const data = [];
 
   fs.createReadStream(filePath)
@@ -95,9 +95,10 @@ function readCSVFile(callback) {
 }
 
 // 定义API端点
-app.get('/api/data-matrix', (req, res) => {
+app.get('/api/data-matrix/get', (req, res) => {
   // 调用readCSVFile函数获取数据
-  readCSVFile((error, data) => {
+  const csvFilePath = './uploads/1.csv';
+  readCSVFile(csvFilePath,(error, data) => {
     if (error) {
       // 处理错误
       console.error('发生错误:', error);
@@ -107,4 +108,32 @@ app.get('/api/data-matrix', (req, res) => {
       res.json({ dataMatrix: data });
     }
   });
+});
+
+app.get('/api/data-matrix/steps', (req, res) => {
+  // 调用readCSVFile函数获取数据
+  const csvFilePath = './uploads/3.csv';
+  readCSVFile(csvFilePath,(error, data) => {
+    if (error) {
+      // 处理错误
+      console.error('发生错误:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      // 将数据矩阵发送给前端
+      res.json({ dataMatrix: data });
+    }
+  });
+});
+
+app.get('/api/data-matrix/inverse', (req, res) => {
+  try {
+    // 执行命令
+    const command = 'python3 ./test.py inverse True > ./uploads/3.csv & sleep 5 & mv ./uploads/2.csv ./uploads/1.csv';
+    execSync(command);
+
+    res.send('命令执行成功！');
+  } catch (error) {
+    console.error(`执行命令时发生错误: ${error.message}`);
+    res.status(500).send('Internal Server Error');
+  }
 });
