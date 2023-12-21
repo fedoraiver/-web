@@ -296,7 +296,7 @@ def guassian(matrix:np.ndarray,express=False):
         ma=r_steps(ma,express)
         for i in np.diagonal(ma):
             output*=i
-        return str(round(output,4))
+        return round(output,4)
 #计算逆矩阵(合格)
 def inverse(matrix:np.ndarray,express=False):
     '''该函数使用了初等变换法计算输入矩阵的逆矩阵'''
@@ -370,7 +370,7 @@ def lu(matrix:np.ndarray,express=False):
         print("矩阵运算出现了不合法的情况: "+e.value)
         return 1j
     else:
-        return (l,u)
+        return np.concatenate((l,u),axis=1)
 #LDU分解(合格)
 def ldu(matrix:np.ndarray,express=False):
     '''该函数基于之前的LU分解,实现了LDU分解(只基于方阵和|A|!=0的情况)'''
@@ -386,19 +386,22 @@ def ldu(matrix:np.ndarray,express=False):
         print("矩阵运算出现了不合法的情况: "+e.value)
         return 1j
     else:
-        (l,u)=lu(u,express)
+        m=lu(u,express)
+        cut=int(m.shape[1]/2)
+        l=m[:,:cut]
+        u=m[:,cut:]
         d=np.diag(np.diag(u))
         for i in range(0,dimension[0]):
             u[i,:]/=u[i,i]
             u[i]=[round(j,4) for j in u[i]]  
-        return (l,d,u)
+        return np.concatenate((l,d,u),axis=1)
 #Crout分解(未验证)
 def crout(matrix:np.ndarray,express=False):
     '''该函数基于之前的LDU分解,实现了Crout分解(只基于方阵和|A|!=0的情况)'''
     u=np.copy(matrix)
     (l,d,u)=ldu(u,express)
     l=np.dot(l,d)
-    return (l,u)        
+    return np.concatenate((l,u),axis=1)
 #QR分解(合格)
 def qr(matrix:np.ndarray):
     '''直接使用了numpy下的qr分解,但进行了Exception的修饰,返回了(Q,R)'''
@@ -411,7 +414,7 @@ def qr(matrix:np.ndarray):
         print("矩阵运算出现了不合法的情况: "+e.value)
         return 1j
     else:
-        return np.linalg.qr(ma)    
+        return np.concatenate(np.linalg.qr(ma),axis=1)
 #取子矩阵(合格)
 def son_true(matrix:np.ndarray,chosen:list):
     '''该函数只能使用二维列表chosen进行按[i]行、[j]列对矩阵进行选取,第1行记作i=1'''
@@ -525,9 +528,15 @@ def schmidt(matrix:np.ndarray,express=False):
         for i in range(0,dimension[1]):
             m[:,i]=result[i]
         if express:
-            return (m,parameter)
-        else:
-            return m
+            for i in range(dimension[1]):
+                print('beta_'+str(i+1),end='=')
+                for j in range(dimension[1]-1):
+                    if(parameter[i,j]<0):
+                        print(str(-parameter[i,j])+'*alpha_'+str(j+1),end='-')
+                    else:
+                        print(str(parameter[i,j])+'*alpha_'+str(j+1),end='+')
+                print(str(parameter[i,j])+'*alpha_'+str(dimension[1]))
+        return m
 #求特征值的函数包装(合格)---------------------------------->有关eigvals和eig函数的区别有待考察,本函数尚未实现求特征向量
 def eigvals(matrix:np.ndarray,absolute=False):
     '''该函数用于对某个矩阵求特征值(包括重根,取小数后6位)并按递减顺序返回(当absolute=True时按照绝对值递减顺序返回)'''

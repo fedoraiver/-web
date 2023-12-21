@@ -165,17 +165,6 @@ export default {
           console.error("请求失败:", error);
         });
     },
-    egm() {
-      // 发起对后端的API请求
-      axios
-        .get("http://10.250.136.172:49154/api/data-matrix/egm")
-        .then((response) => {
-          console.log("命令执行结果:", response.data);
-        })
-        .catch((error) => {
-          console.error("请求失败:", error);
-        });
-    },
   },
 };
 </script>

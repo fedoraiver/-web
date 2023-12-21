@@ -34,6 +34,8 @@ func_name=sys.argv[1]
 express=sys.argv[2]
 result=eval('mr.'+func_name)(matrix,eval(express))
 result=np.round(result,decimals=4)
+if len(result.shape)==0:
+    result=np.full((1,1),result)
 f=pd.DataFrame(data=result)
 f.to_csv(write_path,index=False,header=False)
 #'''
