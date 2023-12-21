@@ -1,5 +1,6 @@
 import numpy as np
 import matrixutil as mr
+import pandas as pd
 import sys
 '''
 a=np.array([[45,68,21,486],[87,42,36,10],[84,76,54,62],[57,83,4,88]],dtype = 'float32')
@@ -27,14 +28,23 @@ mr.display(a)
 '''
 read_path=r'./uploads/1.csv'
 write_path=r'./uploads/2.csv'
-matrix=np.loadtxt(open(read_path,'rb'),delimiter=',')
+matrix=pd.read_csv(read_path,sep=',',header=None)
 #'''
 func_name=sys.argv[1]
 express=sys.argv[2]
-if express=='False':
-    express=False
-else:
-    express=True
-result=eval('mr.'+func_name)(matrix,express)
-np.savetxt(write_path,result,delimiter=',')
+result=eval('mr.'+func_name)(matrix,eval(express))
+result=np.round(result,decimals=4)
+f=pd.DataFrame(data=result)
+f.to_csv(write_path,index=False,header=False)
 #'''
+
+#test
+'''
+a=mr.inverse(matrix)
+print(a)
+result=np.round(a,decimals=2)
+print(result)
+#np.savetxt(write_path,result,delimiter=',')
+f=pd.DataFrame(data=result)
+f.to_csv(write_path)
+'''

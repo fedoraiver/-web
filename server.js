@@ -110,6 +110,21 @@ app.get('/api/data-matrix/get', (req, res) => {
   });
 });
 
+app.get('/api/data-matrix/get2', (req, res) => {
+  // 调用readCSVFile函数获取数据
+  const csvFilePath = './uploads/2.csv';
+  readCSVFile(csvFilePath,(error, data) => {
+    if (error) {
+      // 处理错误
+      console.error('发生错误:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      // 将数据矩阵发送给前端
+      res.json({ dataMatrix: data });
+    }
+  });
+});
+
 app.get('/api/data-matrix/steps', (req, res) => {
   // 调用readCSVFile函数获取数据
   const csvFilePath = './uploads/3.csv';
@@ -125,10 +140,10 @@ app.get('/api/data-matrix/steps', (req, res) => {
   });
 });
 
-app.get('/api/data-matrix/inverse', (req, res) => {
+app.get('/api/data-matrix/rs', (req, res) => {
   try {
     // 执行命令
-    const command = 'python3 ./test.py inverse True > ./uploads/3.csv & sleep 5 & mv ./uploads/2.csv ./uploads/1.csv';
+    const command = 'python3 ./test.py r_steps True > ./uploads/3.csv';
     execSync(command);
 
     res.send('命令执行成功！');
@@ -137,3 +152,173 @@ app.get('/api/data-matrix/inverse', (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
+app.get('/api/data-matrix/cs', (req, res) => {
+  try {
+    // 执行命令
+    const command = 'python3 ./test.py c_steps True > ./uploads/3.csv';
+    execSync(command);
+
+    res.send('命令执行成功！');
+  } catch (error) {
+    console.error(`执行命令时发生错误: ${error.message}`);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/api/data-matrix/srs', (req, res) => {
+  try {
+    // 执行命令
+    const command = 'python3 ./test.py r_simpsteps True > ./uploads/3.csv';
+    execSync(command);
+
+    res.send('命令执行成功！');
+  } catch (error) {
+    console.error(`执行命令时发生错误: ${error.message}`);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/api/data-matrix/scs', (req, res) => {
+  try {
+    // 执行命令
+    const command = 'python3 ./test.py c_simpsteps True > ./uploads/3.csv';
+    execSync(command);
+
+    res.send('命令执行成功！');
+  } catch (error) {
+    console.error(`执行命令时发生错误: ${error.message}`);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/api/data-matrix/gas', (req, res) => {
+  try {
+    // 执行命令
+    const command = 'python3 ./test.py guassian True > ./uploads/3.csv';
+    execSync(command);
+
+    res.send('命令执行成功！');
+  } catch (error) {
+    console.error(`执行命令时发生错误: ${error.message}`);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/api/data-matrix/inv', (req, res) => {
+  try {
+    // 执行命令
+    const command = 'python3 ./test.py inverse True > ./uploads/3.csv';
+    execSync(command);
+
+    res.send('命令执行成功！');
+  } catch (error) {
+    console.error(`执行命令时发生错误: ${error.message}`);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/api/data-matrix/lu', (req, res) => {
+  try {
+    // 执行命令
+    const command = 'python3 ./test.py lu True > ./uploads/3.csv';
+    execSync(command);
+
+    res.send('命令执行成功！');
+  } catch (error) {
+    console.error(`执行命令时发生错误: ${error.message}`);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/api/data-matrix/ldu', (req, res) => {
+  try {
+    // 执行命令
+    const command = 'python3 ./test.py ldu True > ./uploads/3.csv';
+    execSync(command);
+
+    res.send('命令执行成功！');
+  } catch (error) {
+    console.error(`执行命令时发生错误: ${error.message}`);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/api/data-matrix/crt', (req, res) => {
+  try {
+    // 执行命令
+    const command = 'python3 ./test.py crout True > ./uploads/3.csv';
+    execSync(command);
+
+    res.send('命令执行成功！');
+  } catch (error) {
+    console.error(`执行命令时发生错误: ${error.message}`);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/api/data-matrix/qr', (req, res) => {
+  try {
+    // 执行命令
+    const command = 'python3 ./test.py qr True > ./uploads/3.csv';
+    execSync(command);
+
+    res.send('命令执行成功！');
+  } catch (error) {
+    console.error(`执行命令时发生错误: ${error.message}`);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/api/data-matrix/adj', (req, res) => {
+  try {
+    // 执行命令
+    const command = 'python3 ./test.py adjoint True > ./uploads/3.csv';
+    execSync(command);
+
+    res.send('命令执行成功！');
+  } catch (error) {
+    console.error(`执行命令时发生错误: ${error.message}`);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/api/data-matrix/smt', (req, res) => {
+  try {
+    // 执行命令
+    const command = 'python3 ./test.py schmidt True > ./uploads/3.csv';
+    execSync(command);
+
+    res.send('命令执行成功！');
+  } catch (error) {
+    console.error(`执行命令时发生错误: ${error.message}`);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/api/data-matrix/egv', (req, res) => {
+  try {
+    // 执行命令
+    const command = 'python3 ./test.py eigvals True > ./uploads/3.csv';
+    execSync(command);
+
+    res.send('命令执行成功！');
+  } catch (error) {
+    console.error(`执行命令时发生错误: ${error.message}`);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/api/data-matrix/egm', (req, res) => {
+  try {
+    // 执行命令
+    const command = 'python3 ./test.py eigmul True > ./uploads/3.csv';
+    execSync(command);
+
+    res.send('命令执行成功！');
+  } catch (error) {
+    console.error(`执行命令时发生错误: ${error.message}`);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
