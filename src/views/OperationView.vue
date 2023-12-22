@@ -13,7 +13,6 @@
     <button @click="adj">计算输入矩阵的伴随矩阵</button>
     <button @click="smt">Schmidt正交化过程</button>
     <button @click="egv">对某个矩阵求特征值</button>
-    <button @click="egm">求某个矩阵对应的特征多项式</button>
   </div>
 </template>
 
